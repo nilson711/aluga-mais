@@ -117,55 +117,13 @@
                 </div>
 
                 <div class="bg-[#fff2f2] dark:bg-[#1D0002] relative lg:-ml-px -mb-px lg:mb-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg aspect-[335/376] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
-                        <!-- Carrossel de Imagens -->
-                        <div class="relative w-full h-full overflow-hidden" x-data="{
-                            activeSlide: 0,
-                            slides: [
-                                { src: 'https://www.playpartylocacoes.com.br/carousel/cadeiras.jpeg?auto=compress&cs=tinysrgb&w=600', title: 'Mesas e Cadeiras', description: 'Conforto para o evento do seu cliente.' },
-                                { src: 'https://www.playpartylocacoes.com.br/img/geladeira.jpeg?auto=compress&cs=tinysrgb&w=600', title: 'Geladeiras', description: 'Organização e acesso rápido.' },
-                                { src: 'https://www.playpartylocacoes.com.br/carousel/freezer.jpeg?auto=compress&cs=tinysrgb&w=600', title: 'Freezer', description: 'Eficiência em gelar grandes quantidades.' },
-                                { src: 'https://www.playpartylocacoes.com.br/carousel/frigobar.jpeg?auto=compress&cs=tinysrgb&w=600', title: 'Frigobar', description: 'Leve, compacto e funcional.' }
-                            ],
-                            init() {
-                                setInterval(() => {
-                                    this.activeSlide = (this.activeSlide + 1) % this.slides.length;
-                                }, 5000);
-                            }
-                        }">
-                            <!-- Slides -->
-                            <div class="relative h-full w-full">
-                                <template x-for="(slide, index) in slides" :key="index">
-                                    <div x-show="activeSlide === index" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute inset-0">
-                                        <img :src="slide.src" alt="Aluga Mais" class="w-full h-full object-cover">
-                                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                                            <div class="text-center text-white px-4">
-                                                <h2 class="text-2xl md:text-4xl font-bold mb-2" x-text="slide.title"></h2>
-                                                <p class="text-lg md:text-xl" x-text="slide.description"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-
-                            <!-- Indicadores -->
-                            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-                                <template x-for="(slide, index) in slides" :key="index">
-                                    <button @click="activeSlide = index" class="w-3 h-3 rounded-full transition-all" :class="activeSlide === index ? 'bg-white w-6' : 'bg-white/50'"></button>
-                                </template>
-                            </div>
-
-                            <!-- Botões de navegação -->
-                            <button @click="activeSlide = (activeSlide - 1 + slides.length) % slides.length" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 rounded-full p-1 transition z-10">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                </svg>
-                            </button>
-                            <button @click="activeSlide = (activeSlide + 1) % slides.length" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 rounded-full p-1 transition z-10">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </button>
-                        </div>
+                        
+                <!-- Imagem simples -->
+                <img src="https://www.playpartylocacoes.com.br/carousel/cadeiras.jpeg" 
+                alt="Aluga Mais - Equipamentos para Eventos" 
+                class="w-full h-full object-cover"
+                onerror="this.src='https://placehold.co/600x400?text=Aluga+Mais'">
+                        
                         
                         <div class="absolute inset-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] pointer-events-none"></div>
                 </div>
