@@ -19,14 +19,36 @@ class ClienteController extends Controller
         return view('clientes.create');
     }
 
-    public function store(Request $request)
+  public function store(Request $request)
     {
+        // Limpar CPF antes da validação
+        $cpfLimpo = preg_replace('/[^0-9]/', '', $request->cpf);
+        
+        // Verificar se o CPF já existe no banco (validação manual)
+        $cpfExistente = Cliente::where('cpf', $cpfLimpo)->first();
+        if ($cpfExistente) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['cpf' => 'Este CPF já está cadastrado.']);
+        }
+        
+        // Verificar se o email já existe (se informado)
+        if ($request->email) {
+            $emailExistente = Cliente::where('email', $request->email)->first();
+            if ($emailExistente) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['email' => 'Este email já está cadastrado.']);
+            }
+        }
+
+        // Validações padrão (sem unique no CPF/email)
         $validated = $request->validate([
             'nome' => 'required|string|max:100',
-            'email' => 'nullable|email|max:100|unique:clientes',
+            'email' => 'nullable|email|max:100',
             'telefone1' => 'required|string|max:15|regex:/^\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}$/',
             'telefone2' => 'nullable|string|max:15|regex:/^\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}$/',
-            'cpf' => 'required|string|max:14|unique:clientes|regex:/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/',
+            'cpf' => 'required|string|max:14|regex:/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/',
             'cep' => 'required|string|max:10',
             'logradouro' => 'required|string|max:200',
             'numero' => 'required|string|max:10',
@@ -36,21 +58,15 @@ class ClienteController extends Controller
             'uf' => 'required|string|max:2',
             'observacoes' => 'nullable|string',
             'ativo' => 'boolean',
-            ],
-            [
-            'cpf.unique' => 'Este CPF já está cadastrado.',
-            'cpf.regex' => 'Digite um CPF válido no formato 111.111.111-11.',
-            'telefone1.regex' => 'Digite um telefone válido no formato (11) 99999-9999.',
-            ]
-            );
+        ]);
 
-              // Remove formatação antes de salvar
-            $validated['telefone1'] = preg_replace('/[^0-9]/', '', $validated['telefone1']);
-            $validated['telefone2'] = isset($validated['telefone2']) ? preg_replace('/[^0-9]/', '', $validated['telefone2']) : null;
-            $validated['cpf'] = preg_replace('/[^0-9]/', '', $validated['cpf']);
-            
-            $validated['ativo'] = $request->has('ativo') ? true : false;
-            
+        // Remove formatação antes de salvar
+        $validated['telefone1'] = preg_replace('/[^0-9]/', '', $validated['telefone1']);
+        $validated['telefone2'] = isset($validated['telefone2']) ? preg_replace('/[^0-9]/', '', $validated['telefone2']) : null;
+        $validated['cpf'] = $cpfLimpo; // Usa o CPF já limpo
+        
+        $validated['ativo'] = $request->has('ativo') ? true : false;
+        
         // Adicionar o user_id do usuário logado
         $validated['user_id'] = Auth::id();
 
