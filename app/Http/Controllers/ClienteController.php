@@ -36,7 +36,13 @@ class ClienteController extends Controller
             'uf' => 'required|string|max:2',
             'observacoes' => 'nullable|string',
             'ativo' => 'boolean',
-            ]);
+            ],
+            [
+            'cpf.unique' => 'Este CPF já está cadastrado.',
+            'cpf.regex' => 'Digite um CPF válido no formato 111.111.111-11.',
+            'telefone1.regex' => 'Digite um telefone válido no formato (11) 99999-9999.',
+            ]
+            );
 
               // Remove formatação antes de salvar
             $validated['telefone1'] = preg_replace('/[^0-9]/', '', $validated['telefone1']);
