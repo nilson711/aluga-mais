@@ -54,7 +54,7 @@
             <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
                 <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
                     <h1 class="mb-1 font-medium">Conheça o Aluga Mais</h1>
-                    <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">É um sistema para quem aluga equipamentos para eventos.<br>Ele controla todo o processo, do pedido até a devolução.
+                    <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">O Aluga Mais é um sistema voltado para empresas que alugam equipamentos para eventos.<br>Ele controla todo o processo, do pedido até a devolução.
                     </p>
                     
                     <ul class="flex flex-col mb-4 lg:mb-6">
@@ -113,6 +113,9 @@
                             </span>
                         </li>
                     </ul>
+
+                    <small class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">Atualização 18/06/2024 - Versão 1.0.0</small>
+                    </p>
                     
                 </div>
 
