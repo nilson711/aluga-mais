@@ -42,12 +42,23 @@
                             <div class="bg-gray-50 p-4 rounded">
                                 <table class="w-full">
                                     <tr class="border-b">
-                                        <td class="py-2 font-medium">Nome:</td>
+                                        <td class="py-2 font-medium">Nome Completo / Razão Social:</td>
                                         <td class="py-2">{{ $cliente->nome }}</td>
                                     </tr>
                                     <tr class="border-b">
-                                        <td class="py-2 font-medium">CPF:</td>
-                                        <td class="py-2">{{ $cliente->cpf }}</td>
+                                        <td class="py-2 font-medium">CPF / CNPJ:</td>
+                                        <td class="py-2">
+                                            @php
+                                                $cpfLimpo = preg_replace('/[^0-9]/', '', $cliente->cpf);
+                                                if (strlen($cpfLimpo) === 11) {
+                                                    echo preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpfLimpo);
+                                                } elseif (strlen($cpfLimpo) === 14) {
+                                                    echo preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3/$4-$5', $cpfLimpo);
+                                                } else {
+                                                    echo $cliente->cpf;
+                                                }
+                                            @endphp
+                                        </td>
                                     </tr>
                                     <tr class="border-b">
                                         <td class="py-2 font-medium">E-mail:</td>
@@ -55,12 +66,34 @@
                                     </tr>
                                     <tr class="border-b">
                                         <td class="py-2 font-medium">Telefone Principal:</td>
-                                        <td class="py-2">{{ $cliente->telefone1 }}</td>
+                                        <td class="py-2">
+                                            @php
+                                                $telLimpo = preg_replace('/[^0-9]/', '', $cliente->telefone1);
+                                                if (strlen($telLimpo) === 10) {
+                                                    echo '(' . substr($telLimpo, 0, 2) . ') ' . substr($telLimpo, 2, 4) . '-' . substr($telLimpo, 6, 4);
+                                                } elseif (strlen($telLimpo) === 11) {
+                                                    echo '(' . substr($telLimpo, 0, 2) . ') ' . substr($telLimpo, 2, 5) . '-' . substr($telLimpo, 7, 4);
+                                                } else {
+                                                    echo $cliente->telefone1;
+                                                }
+                                            @endphp
+                                        </td>
                                     </tr>
                                     @if($cliente->telefone2)
                                     <tr class="border-b">
                                         <td class="py-2 font-medium">Telefone Alternativo:</td>
-                                        <td class="py-2">{{ $cliente->telefone2 }}</td>
+                                        <td class="py-2">
+                                            @php
+                                                $telLimpo2 = preg_replace('/[^0-9]/', '', $cliente->telefone2);
+                                                if (strlen($telLimpo2) === 10) {
+                                                    echo '(' . substr($telLimpo2, 0, 2) . ') ' . substr($telLimpo2, 2, 4) . '-' . substr($telLimpo2, 6, 4);
+                                                } elseif (strlen($telLimpo2) === 11) {
+                                                    echo '(' . substr($telLimpo2, 0, 2) . ') ' . substr($telLimpo2, 2, 5) . '-' . substr($telLimpo2, 7, 4);
+                                                } else {
+                                                    echo $cliente->telefone2;
+                                                }
+                                            @endphp
+                                        </td>
                                     </tr>
                                     @endif
                                     <tr class="border-b">
@@ -92,7 +125,16 @@
                                 <table class="w-full">
                                     <tr class="border-b">
                                         <td class="py-2 font-medium">CEP:</td>
-                                        <td class="py-2">{{ $cliente->cep }}</td>
+                                        <td class="py-2">
+                                            @php
+                                                $cepLimpo = preg_replace('/[^0-9]/', '', $cliente->cep);
+                                                if (strlen($cepLimpo) === 8) {
+                                                    echo substr($cepLimpo, 0, 5) . '-' . substr($cepLimpo, 5, 3);
+                                                } else {
+                                                    echo $cliente->cep;
+                                                }
+                                            @endphp
+                                        </td>
                                     </tr>
                                     <tr class="border-b">
                                         <td class="py-2 font-medium">Logradouro:</td>

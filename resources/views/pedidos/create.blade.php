@@ -311,73 +311,73 @@
                         </div>
                         
                         <!-- Seção: Totais -->
-                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-4">💰 Totais</h3>
-                            <div class="flex justify-end">
-                                <div class="w-96 space-y-2">
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Subtotal:</span>
-                                        <span id="subtotal-display" class="text-lg font-semibold">R$ 0,00</span>
-                                    </div>
-
-                                     <!-- ✅ Taxa de Entrega -->
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Taxa de Entrega (R$):</span>
-                                        <input type="number" name="taxa_entrega" id="taxa_entrega" value="10.00" step="0.01" 
-                                            class="w-32 text-right border rounded px-2 py-1">
-                                    </div>
-                                    
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Desconto (R$):</span>
-                                        <input type="number" name="desconto" id="desconto" value="0" step="0.01" class="w-32 text-right border rounded px-2 py-1">
-                                    </div>
-                                    <div class="flex justify-between items-center pt-2">
-                                        <span class="font-bold text-lg text-gray-800">TOTAL:</span>
-                                        <span id="total-display" class="text-2xl font-bold text-blue-600">R$ 0,00</span>
-                                    </div>
-
-                                    <!-- ✅ Caução (50% do Total) - Apenas exibição -->
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Caução (50%):</span>
-                                        <span id="caucao-display" class="text-lg font-semibold text-orange-600">R$ 0,00</span>
-                                    </div>
-                                    
-                                    <!-- Forma de Pagamento (ocupando 4 colunas) -->
-                                    <div class="md:col-span-4">
-                                        <label class="block text-sm font-medium text-gray-700">Forma de Pagamento *</label>
-                                        <select name="forma_pagamento" required
-                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                            <option value="">Selecione...</option>
-                                            <option value="dinheiro" {{ old('forma_pagamento') == 'dinheiro' ? 'selected' : '' }}>Dinheiro</option>
-                                            <option value="pix" {{ old('forma_pagamento') == 'pix' ? 'selected' : '' }}>PIX</option>
-                                            <option value="cartao_credito" {{ old('forma_pagamento') == 'cartao_credito' ? 'selected' : '' }}>Cartão de Crédito</option>
-                                            <option value="cartao_debito" {{ old('forma_pagamento') == 'cartao_debito' ? 'selected' : '' }}>Cartão de Débito</option>
-                                            <option value="boleto" {{ old('forma_pagamento') == 'boleto' ? 'selected' : '' }}>Boleto</option>
-                                        </select>
-                                        @error('forma_pagamento') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                    </div>
-
-                                               <!-- ✅ CPF - abaixo da Forma de Pagamento -->
-                                    <div class="pt-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">CPF (opcional)</label>
-                                        <input type="text" name="cpf_pedido" id="cpf_pedido" value="{{ old('cpf_pedido') }}"
-                                            placeholder="111.111.111-11"
-                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                        @error('cpf_pedido') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                    </div>
-
-                                              <!-- ✅ CNPJ -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">CNPJ (opcional)</label>
-                                        <input type="text" name="cnpj_pedido" id="cnpj_pedido" value="{{ old('cnpj_pedido') }}"
-                                            placeholder="12.345.678/0001-90"
-                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                        @error('cnpj_pedido') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
+<div class="bg-gray-50 p-4 rounded-lg mb-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">💰 Totais</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Coluna Esquerda: Forma de Pagamento, CPF e CNPJ -->
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Forma de Pagamento *</label>
+                <select name="forma_pagamento" required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <option value="">Selecione...</option>
+                    <option value="dinheiro" {{ old('forma_pagamento') == 'dinheiro' ? 'selected' : '' }}>Dinheiro</option>
+                    <option value="pix" {{ old('forma_pagamento') == 'pix' ? 'selected' : '' }}>PIX</option>
+                    <option value="cartao_credito" {{ old('forma_pagamento') == 'cartao_credito' ? 'selected' : '' }}>Cartão de Crédito</option>
+                    <option value="cartao_debito" {{ old('forma_pagamento') == 'cartao_debito' ? 'selected' : '' }}>Cartão de Débito</option>
+                    <option value="boleto" {{ old('forma_pagamento') == 'boleto' ? 'selected' : '' }}>Boleto</option>
+                </select>
+                @error('forma_pagamento') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CPF (opcional)</label>
+                <input type="text" name="cpf_pedido" id="cpf_pedido" value="{{ old('cpf_pedido') }}"
+                    placeholder="111.111.111-11"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                @error('cpf_pedido') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CNPJ (opcional)</label>
+                <input type="text" name="cnpj_pedido" id="cnpj_pedido" value="{{ old('cnpj_pedido') }}"
+                    placeholder="12.345.678/0001-90"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                @error('cnpj_pedido') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+        </div>
+        
+        <!-- Coluna Direita: Totais -->
+        <div class="space-y-2">
+            <div class="flex justify-between items-center pb-2 border-b">
+                <span class="font-medium text-gray-600">Subtotal:</span>
+                <span id="subtotal-display" class="text-lg font-semibold">R$ 0,00</span>
+            </div>
+            
+            <div class="flex justify-between items-center pb-2 border-b">
+                <span class="font-medium text-gray-600">Taxa de Entrega (R$):</span>
+                <input type="number" name="taxa_entrega" id="taxa_entrega" value="10.00" step="0.01" 
+                    class="w-32 text-right border rounded px-2 py-1">
+            </div>
+            
+            <div class="flex justify-between items-center pb-2 border-b">
+                <span class="font-medium text-gray-600">Desconto (R$):</span>
+                <input type="number" name="desconto" id="desconto" value="0" step="0.01" 
+                    class="w-32 text-right border rounded px-2 py-1">
+            </div>
+            
+            <div class="flex justify-between items-center pb-2 border-b">
+                <span class="font-medium text-gray-600">Entrada (50%):</span>
+                <span id="caucao-display" class="text-lg font-semibold text-orange-600">R$ 0,00</span>
+            </div>
+            
+            <div class="flex justify-between items-center pt-2">
+                <span class="font-bold text-lg text-gray-800">TOTAL:</span>
+                <span id="total-display" class="text-2xl font-bold text-blue-600">R$ 0,00</span>
+            </div>
+        </div>
+    </div>
+</div>
                         
                         <!-- Observações -->
                         <div class="mb-6">

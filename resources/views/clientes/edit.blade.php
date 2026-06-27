@@ -43,7 +43,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                             <!-- Primeira linha: Nome (12 colunas) -->
                             <div class="md:col-span-12">
-                                <label class="block text-sm font-medium text-gray-700">Nome *</label>
+                                <label class="block text-sm font-medium text-gray-700">Nome Completo / Razão Social *</label>
                                 <input type="text" name="nome" value="{{ old('nome', $cliente->nome) }}" required
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                 @error('nome') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -73,13 +73,18 @@
                                 @error('telefone2') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
                             
-                            <div class="md:col-span-3">
-                                <label class="block text-sm font-medium text-gray-700">CPF *</label>
-                                <input type="text" name="cpf" id="cpf" value="{{ old('cpf', $cliente->cpf) }}" required
-                                    placeholder="111.111.111-11"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                @error('cpf') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                            </div>
+                        <!-- CPF / CNPJ -->
+                        <div class="md:col-span-3">
+                            <label class="block text-sm font-medium text-gray-700">CPF / CNPJ *</label>
+                            <input type="text" name="cpf" id="cpf" value="{{ old('cpf', $cliente->cpf ?? '') }}" required
+                                placeholder="111.111.111-11 ou 12.345.678/0001-90"
+                                maxlength="18"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <p class="mt-1 text-xs text-gray-500">
+                                💡 Digite o CPF ou CNPJ do cliente. O sistema identificará automaticamente.
+                            </p>
+                            @error('cpf') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
                             
                             <!-- Terceira linha: CEP (3 colunas) -->
                             <div class="md:col-span-3">
@@ -198,8 +203,11 @@
 
 <script>
     // Máscara para telefone
-    document.getElementById('telefone1').addEventListener('input', function(e) {
+    document.getElementById('telefone1')?.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) {
+            value = value.slice(0, 11);
+        }
         if (value.length <= 10) {
             value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
         } else {
@@ -208,8 +216,11 @@
         e.target.value = value;
     });
     
-    document.getElementById('telefone2').addEventListener('input', function(e) {
+    document.getElementById('telefone2')?.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) {
+            value = value.slice(0, 11);
+        }
         if (value.length <= 10) {
             value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
         } else {
@@ -218,29 +229,127 @@
         e.target.value = value;
     });
     
-    // Máscara para CPF
-    document.getElementById('cpf').addEventListener('input', function(e) {
+    // ✅ Máscara para CPF ou CNPJ (identifica automaticamente)
+    document.getElementById('cpf')?.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
-        if (value.length <= 11) {
+        
+        // Se tem mais de 11 dígitos, é CNPJ
+        if (value.length > 11) {
+            // Limitar a 14 dígitos (CNPJ)
+            if (value.length > 14) {
+                value = value.slice(0, 14);
+            }
+            // Aplicar máscara de CNPJ: 12.345.678/0001-90
+            value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        } else {
+            // Aplicar máscara de CPF: 111.111.111-11
+            if (value.length > 11) {
+                value = value.slice(0, 11);
+            }
             value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
         }
         e.target.value = value;
     });
     
+    // ✅ Identificar se é CPF ou CNPJ e ajustar validação
+    document.getElementById('cpf')?.addEventListener('blur', function() {
+        const value = this.value.replace(/\D/g, '');
+        const length = value.length;
+        const errorSpan = document.getElementById('cpf-error');
+        
+        if (length === 0) {
+            // Campo vazio, não faz nada (mas é required)
+            return;
+        }
+        
+        if (length === 11) {
+            // Validar CPF
+            if (!validarCPF(value)) {
+                alert('CPF inválido! Verifique o número digitado.');
+                this.value = '';
+            }
+        } else if (length === 14) {
+            // Validar CNPJ
+            if (!validarCNPJ(value)) {
+                alert('CNPJ inválido! Verifique o número digitado.');
+                this.value = '';
+            }
+        } else {
+            alert('CPF deve ter 11 dígitos ou CNPJ deve ter 14 dígitos.');
+            this.value = '';
+        }
+    });
+    
     // Buscar endereço por CEP (ViaCEP)
-    document.getElementById('cep').addEventListener('blur', function() {
+    document.getElementById('cep')?.addEventListener('blur', function() {
         let cep = this.value.replace(/\D/g, '');
         if (cep.length === 8) {
             fetch(`https://viacep.com.br/ws/${cep}/json/`)
                 .then(response => response.json())
                 .then(data => {
                     if (!data.erro) {
-                        document.getElementById('logradouro').value = data.logradouro;
-                        document.getElementById('bairro').value = data.bairro;
-                        document.getElementById('cidade').value = data.localidade;
-                        document.querySelector('select[name="uf"]').value = data.uf;
+                        document.getElementById('logradouro').value = data.logradouro || '';
+                        document.getElementById('bairro').value = data.bairro || '';
+                        document.getElementById('cidade').value = data.localidade || '';
+                        document.querySelector('select[name="uf"]').value = data.uf || '';
                     }
                 });
         }
     });
+
+    // ✅ Função para validar CPF
+    function validarCPF(cpf) {
+        cpf = cpf.replace(/\D/g, '');
+        if (cpf.length !== 11) return false;
+        if (/^(\d)\1{10}$/.test(cpf)) return false;
+        
+        let sum = 0;
+        for (let i = 0; i < 9; i++) {
+            sum += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+        let firstDigit = 11 - (sum % 11);
+        if (firstDigit >= 10) firstDigit = 0;
+        if (firstDigit !== parseInt(cpf.charAt(9))) return false;
+        
+        sum = 0;
+        for (let i = 0; i < 10; i++) {
+            sum += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+        let secondDigit = 11 - (sum % 11);
+        if (secondDigit >= 10) secondDigit = 0;
+        if (secondDigit !== parseInt(cpf.charAt(10))) return false;
+        
+        return true;
+    }
+
+    // ✅ Função para validar CNPJ
+    function validarCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, '');
+        if (cnpj.length !== 14) return false;
+        if (/^(\d)\1{13}$/.test(cnpj)) return false;
+        
+        let sum = 0;
+        let peso = 5;
+        for (let i = 0; i < 12; i++) {
+            sum += parseInt(cnpj.charAt(i)) * peso;
+            peso--;
+            if (peso < 2) peso = 9;
+        }
+        let firstDigit = 11 - (sum % 11);
+        if (firstDigit >= 10) firstDigit = 0;
+        if (firstDigit !== parseInt(cnpj.charAt(12))) return false;
+        
+        sum = 0;
+        peso = 6;
+        for (let i = 0; i < 13; i++) {
+            sum += parseInt(cnpj.charAt(i)) * peso;
+            peso--;
+            if (peso < 2) peso = 9;
+        }
+        let secondDigit = 11 - (sum % 11);
+        if (secondDigit >= 10) secondDigit = 0;
+        if (secondDigit !== parseInt(cnpj.charAt(13))) return false;
+        
+        return true;
+    }
 </script>

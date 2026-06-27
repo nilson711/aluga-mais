@@ -43,7 +43,7 @@
                                     <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th> -->
                                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patrimônio</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th> -->
                                     <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marca/Modelo</th> -->
                                     <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Diária</th> -->
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -56,11 +56,11 @@
                                     <!-- <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $equipamento->id }}</td> -->
                                      <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">{{ $equipamento->numero_patrimonio ?? '—' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $equipamento->nome }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                                             {{ $equipamento->categoria }}
                                         </span>
-                                    </td>
+                                    </td> -->
                                     <!-- <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $equipamento->marca }} {{ $equipamento->modelo }}</td> -->
                                     <!-- <td class="px-6 py-4 whitespace-nowrap text-sm">R$ {{ number_format($equipamento->preco_diaria, 2, ',', '.') }}</td> -->
 

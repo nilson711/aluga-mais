@@ -17,8 +17,8 @@
                         <thead>
                             <tr>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nome Completo / Razão Social</th>
+                                <!-- <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</th> -->
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Telefone</th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                             </tr>
@@ -28,7 +28,7 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap">{{ $cliente->id }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap">{{ $cliente->nome }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap">{{ $cliente->email }}</td>
+                                <!-- <td class="px-6 py-4 whitespace-no-wrap">{{ $cliente->email }}</td> -->
                                 <td class="px-6 py-4 whitespace-no-wrap">{{ $cliente->telefone1 }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
                                     <a href="{{ route('clientes.show', $cliente) }}" class="text-blue-600 hover:text-blue-900 mr-3">Ver</a>

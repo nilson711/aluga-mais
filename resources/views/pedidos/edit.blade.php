@@ -13,6 +13,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    
                     <form action="{{ route('pedidos.update', $pedido) }}" method="POST" id="pedidoForm">
                         @csrf
                         @method('PUT')
@@ -20,7 +21,7 @@
                         <!-- Seção: Dados do Cliente e Datas -->
                         <div class="bg-gray-50 p-4 rounded-lg mb-6">
                             <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-                                <!-- Cliente com Select2 -->
+                                <!-- Cliente (4 colunas) -->
                                 <div class="md:col-span-4">
                                     <div class="flex justify-between items-center mb-1">
                                         <label class="block text-sm font-medium text-gray-700">Cliente *</label>
@@ -101,128 +102,97 @@
                         </div>
 
                         <!-- Seção: Endereço de Entrega -->
-                        <!-- Seção: Endereço de Entrega -->
-<div class="bg-gray-50 p-4 rounded-lg mb-6">
-    <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">📍 Endereço de Entrega</h3>
-        <button type="button" id="copiarEnderecoCliente" class="text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-lg transition flex items-center gap-1">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
-            </svg>
-            Copiar endereço do cliente
-        </button>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-        <!-- CEP -->
-        <div class="md:col-span-3">
-            <label class="block text-sm font-medium text-gray-700">CEP *</label>
-            <input type="text" name="cep_entrega" id="cep_entrega" value="{{ old('cep_entrega', $pedido->cep_entrega) }}"
-                placeholder="12345-678"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            @error('cep_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold text-gray-800">📍 Endereço de Entrega</h3>
+                                <button type="button" id="copiarEnderecoCliente" class="text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-lg transition flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                                    </svg>
+                                    Copiar endereço do cliente
+                                </button>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                <div class="md:col-span-3">
+                                    <label class="block text-sm font-medium text-gray-700">CEP *</label>
+                                    <input type="text" name="cep_entrega" id="cep_entrega" value="{{ old('cep_entrega', $pedido->cep_entrega) }}"
+                                        placeholder="12345-678"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    @error('cep_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-        <!-- Logradouro -->
-        <div class="md:col-span-7">
-            <label class="block text-sm font-medium text-gray-700">Logradouro *</label>
-            <input type="text" name="logradouro_entrega" id="logradouro_entrega" value="{{ old('logradouro_entrega', $pedido->logradouro_entrega) }}"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            @error('logradouro_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                                <div class="md:col-span-7">
+                                    <label class="block text-sm font-medium text-gray-700">Logradouro *</label>
+                                    <input type="text" name="logradouro_entrega" id="logradouro_entrega" value="{{ old('logradouro_entrega', $pedido->logradouro_entrega) }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    @error('logradouro_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-        <!-- Número -->
-        <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700">Número *</label>
-            <input type="text" name="numero_entrega" id="numero_entrega" value="{{ old('numero_entrega', $pedido->numero_entrega) }}"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            @error('numero_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700">Número *</label>
+                                    <input type="text" name="numero_entrega" id="numero_entrega" value="{{ old('numero_entrega', $pedido->numero_entrega) }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    @error('numero_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-        <!-- Complemento -->
-        <div class="md:col-span-12">
-            <label class="block text-sm font-medium text-gray-700">Complemento</label>
-            <input type="text" name="complemento_entrega" id="complemento_entrega" value="{{ old('complemento_entrega', $pedido->complemento_entrega) }}"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            @error('complemento_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                                <div class="md:col-span-12">
+                                    <label class="block text-sm font-medium text-gray-700">Complemento</label>
+                                    <input type="text" name="complemento_entrega" id="complemento_entrega" value="{{ old('complemento_entrega', $pedido->complemento_entrega) }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    @error('complemento_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-        <!-- Bairro -->
-        <div class="md:col-span-4">
-            <label class="block text-sm font-medium text-gray-700">Bairro *</label>
-            <input type="text" name="bairro_entrega" id="bairro_entrega" value="{{ old('bairro_entrega', $pedido->bairro_entrega) }}"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            @error('bairro_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                                <div class="md:col-span-4">
+                                    <label class="block text-sm font-medium text-gray-700">Bairro *</label>
+                                    <input type="text" name="bairro_entrega" id="bairro_entrega" value="{{ old('bairro_entrega', $pedido->bairro_entrega) }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    @error('bairro_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-        <!-- Cidade -->
-        <div class="md:col-span-6">
-            <label class="block text-sm font-medium text-gray-700">Cidade *</label>
-            <input type="text" name="cidade_entrega" id="cidade_entrega" value="{{ old('cidade_entrega', $pedido->cidade_entrega) }}"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            @error('cidade_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                                <div class="md:col-span-6">
+                                    <label class="block text-sm font-medium text-gray-700">Cidade *</label>
+                                    <input type="text" name="cidade_entrega" id="cidade_entrega" value="{{ old('cidade_entrega', $pedido->cidade_entrega) }}"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    @error('cidade_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-        <!-- UF -->
-        <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700">UF *</label>
-            <select name="uf_entrega" id="uf_entrega"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                <option value="">Selecione...</option>
-                <option value="AC" {{ old('uf_entrega', $pedido->uf_entrega) == 'AC' ? 'selected' : '' }}>AC</option>
-                <option value="AL" {{ old('uf_entrega', $pedido->uf_entrega) == 'AL' ? 'selected' : '' }}>AL</option>
-                <option value="AP" {{ old('uf_entrega', $pedido->uf_entrega) == 'AP' ? 'selected' : '' }}>AP</option>
-                <option value="AM" {{ old('uf_entrega', $pedido->uf_entrega) == 'AM' ? 'selected' : '' }}>AM</option>
-                <option value="BA" {{ old('uf_entrega', $pedido->uf_entrega) == 'BA' ? 'selected' : '' }}>BA</option>
-                <option value="CE" {{ old('uf_entrega', $pedido->uf_entrega) == 'CE' ? 'selected' : '' }}>CE</option>
-                <option value="DF" {{ old('uf_entrega', $pedido->uf_entrega) == 'DF' ? 'selected' : '' }}>DF</option>
-                <option value="ES" {{ old('uf_entrega', $pedido->uf_entrega) == 'ES' ? 'selected' : '' }}>ES</option>
-                <option value="GO" {{ old('uf_entrega', $pedido->uf_entrega) == 'GO' ? 'selected' : '' }}>GO</option>
-                <option value="MA" {{ old('uf_entrega', $pedido->uf_entrega) == 'MA' ? 'selected' : '' }}>MA</option>
-                <option value="MT" {{ old('uf_entrega', $pedido->uf_entrega) == 'MT' ? 'selected' : '' }}>MT</option>
-                <option value="MS" {{ old('uf_entrega', $pedido->uf_entrega) == 'MS' ? 'selected' : '' }}>MS</option>
-                <option value="MG" {{ old('uf_entrega', $pedido->uf_entrega) == 'MG' ? 'selected' : '' }}>MG</option>
-                <option value="PA" {{ old('uf_entrega', $pedido->uf_entrega) == 'PA' ? 'selected' : '' }}>PA</option>
-                <option value="PB" {{ old('uf_entrega', $pedido->uf_entrega) == 'PB' ? 'selected' : '' }}>PB</option>
-                <option value="PR" {{ old('uf_entrega', $pedido->uf_entrega) == 'PR' ? 'selected' : '' }}>PR</option>
-                <option value="PE" {{ old('uf_entrega', $pedido->uf_entrega) == 'PE' ? 'selected' : '' }}>PE</option>
-                <option value="PI" {{ old('uf_entrega', $pedido->uf_entrega) == 'PI' ? 'selected' : '' }}>PI</option>
-                <option value="RJ" {{ old('uf_entrega', $pedido->uf_entrega) == 'RJ' ? 'selected' : '' }}>RJ</option>
-                <option value="RN" {{ old('uf_entrega', $pedido->uf_entrega) == 'RN' ? 'selected' : '' }}>RN</option>
-                <option value="RS" {{ old('uf_entrega', $pedido->uf_entrega) == 'RS' ? 'selected' : '' }}>RS</option>
-                <option value="RO" {{ old('uf_entrega', $pedido->uf_entrega) == 'RO' ? 'selected' : '' }}>RO</option>
-                <option value="RR" {{ old('uf_entrega', $pedido->uf_entrega) == 'RR' ? 'selected' : '' }}>RR</option>
-                <option value="SC" {{ old('uf_entrega', $pedido->uf_entrega) == 'SC' ? 'selected' : '' }}>SC</option>
-                <option value="SP" {{ old('uf_entrega', $pedido->uf_entrega) == 'SP' ? 'selected' : '' }}>SP</option>
-                <option value="SE" {{ old('uf_entrega', $pedido->uf_entrega) == 'SE' ? 'selected' : '' }}>SE</option>
-                <option value="TO" {{ old('uf_entrega', $pedido->uf_entrega) == 'TO' ? 'selected' : '' }}>TO</option>
-            </select>
-            @error('uf_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700">UF *</label>
+                                    <select name="uf_entrega" id="uf_entrega"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <option value="">Selecione...</option>
+                                        @foreach(['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'] as $uf)
+                                            <option value="{{ $uf }}" {{ old('uf_entrega', $pedido->uf_entrega) == $uf ? 'selected' : '' }}>{{ $uf }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('uf_entrega') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-<!-- Link de Localização -->
-<div class="md:col-span-12">
-    <label class="block text-sm font-medium text-gray-700 mb-1">
-        Link de Localização (Waze) <span class="text-red-500">*</span>
-    </label>
-    <div class="flex gap-2">
-        <input type="text" name="localizacao" id="localizacao" value="{{ old('localizacao', $pedido->localizacao ?? '') }}"
-            placeholder="https://waze.com/ul?ll=-15.12345,-47.12345&navigate=yes"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            required>
-        <button type="button" id="gerarLocalizacao" class="mt-1 bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded whitespace-nowrap">
-            📍 Gerar
-        </button>
-    </div>
-    <p class="mt-1 text-xs text-gray-500">
-        Clique em "Gerar" para criar o link automaticamente baseado no endereço de entrega.
-    </p>
-    @error('localizacao') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-</div>
+                                <!-- Link de Localização -->
+                                <div class="md:col-span-12">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Link de Localização (Waze) <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="flex gap-2">
+                                        <input type="text" name="localizacao" id="localizacao" value="{{ old('localizacao', $pedido->localizacao ?? '') }}"
+                                            placeholder="https://waze.com/ul?ll=-15.12345,-47.12345&navigate=yes"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required>
+                                        <button type="button" id="gerarLocalizacao" class="mt-1 bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded whitespace-nowrap">
+                                            📍 Gerar
+                                        </button>
+                                    </div>
+                                    <p class="mt-1 text-xs text-gray-500">
+                                        Clique em "Gerar" para criar o link automaticamente baseado no endereço de entrega.
+                                    </p>
+                                    @error('localizacao') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                                </div>
 
-<input type="hidden" name="latitude" id="latitude" value="{{ old('latitude', $pedido->latitude ?? '') }}">
-<input type="hidden" name="longitude" id="longitude" value="{{ old('longitude', $pedido->longitude ?? '') }}">
-
+                                <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude', $pedido->latitude ?? '') }}">
+                                <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude', $pedido->longitude ?? '') }}">
+                            </div>
+                        </div>
 
                         <!-- Seção: Itens do Pedido -->
                         <div class="bg-gray-50 p-4 rounded-lg mb-6">
@@ -274,39 +244,10 @@
                         <!-- Seção: Totais -->
                         <div class="bg-gray-50 p-4 rounded-lg mb-6">
                             <h3 class="text-lg font-semibold text-gray-800 mb-4">💰 Totais</h3>
-                            <div class="flex justify-end">
-                                <div class="w-96 space-y-2">
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Subtotal:</span>
-                                        <span id="subtotal-display" class="text-lg font-semibold">R$ {{ number_format($pedido->subtotal, 2, ',', '.') }}</span>
-                                    </div>
-                                    
-                                    <!-- Taxa de Entrega -->
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Taxa de Entrega (R$):</span>
-                                        <input type="number" name="taxa_entrega" id="taxa_entrega" value="{{ old('taxa_entrega', $pedido->taxa_entrega) }}" step="0.01" 
-                                            class="w-32 text-right border rounded px-2 py-1">
-                                    </div>
-                                    
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Desconto (R$):</span>
-                                        <input type="number" name="desconto" id="desconto" value="{{ old('desconto', $pedido->desconto) }}" step="0.01" 
-                                            class="w-32 text-right border rounded px-2 py-1">
-                                    </div>
-                                    
-                                    <!-- Caução (50% do Total) -->
-                                    <div class="flex justify-between items-center pb-2 border-b">
-                                        <span class="font-medium text-gray-600">Caução (50%):</span>
-                                        <span id="caucao-display" class="text-lg font-semibold text-orange-600">R$ 0,00</span>
-                                    </div>
-                                    
-                                    <div class="flex justify-between items-center pt-2">
-                                        <span class="font-bold text-lg text-gray-800">TOTAL:</span>
-                                        <span id="total-display" class="text-2xl font-bold text-blue-600">R$ {{ number_format($pedido->total, 2, ',', '.') }}</span>
-                                    </div>
-                                    
-                                    <!-- Forma de Pagamento -->
-                                    <div class="pt-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Coluna Direita: Forma de Pagamento, CPF e CNPJ -->
+                                <div class="space-y-4">
+                                    <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Forma de Pagamento *</label>
                                         <select name="forma_pagamento" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -320,8 +261,7 @@
                                         @error('forma_pagamento') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                     </div>
                                     
-                                    <!-- CPF -->
-                                    <div class="pt-4">
+                                    <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
                                         <input type="text" name="cpf_pedido" id="cpf_pedido" value="{{ old('cpf_pedido', $pedido->cpf_pedido ?? '') }}"
                                             placeholder="111.111.111-11"
@@ -329,7 +269,6 @@
                                         @error('cpf_pedido') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                     </div>
                                     
-                                    <!-- CNPJ -->
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">CNPJ</label>
                                         <input type="text" name="cnpj_pedido" id="cnpj_pedido" value="{{ old('cnpj_pedido', $pedido->cnpj_pedido ?? '') }}"
@@ -338,6 +277,36 @@
                                         @error('cnpj_pedido') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
+                                <!-- Coluna Esquerda: Totais -->
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center pb-2 border-b">
+                                        <span class="font-medium text-gray-600">Subtotal:</span>
+                                        <span id="subtotal-display" class="text-lg font-semibold">R$ {{ number_format($pedido->subtotal, 2, ',', '.') }}</span>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center pb-2 border-b">
+                                        <span class="font-medium text-gray-600">Taxa de Entrega (R$):</span>
+                                        <input type="number" name="taxa_entrega" id="taxa_entrega" value="{{ old('taxa_entrega', $pedido->taxa_entrega) }}" step="0.01" 
+                                            class="w-32 text-right border rounded px-2 py-1">
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center pb-2 border-b">
+                                        <span class="font-medium text-gray-600">Desconto (R$):</span>
+                                        <input type="number" name="desconto" id="desconto" value="{{ old('desconto', $pedido->desconto) }}" step="0.01" 
+                                            class="w-32 text-right border rounded px-2 py-1">
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center pb-2 border-b">
+                                        <span class="font-medium text-gray-600">Entrada (50%):</span>
+                                        <span id="caucao-display" class="text-lg font-semibold text-orange-600">R$ 0,00</span>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center pt-2">
+                                        <span class="font-bold text-lg text-gray-800">TOTAL:</span>
+                                        <span id="total-display" class="text-2xl font-bold text-blue-600">R$ {{ number_format($pedido->total, 2, ',', '.') }}</span>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                         
@@ -348,15 +317,16 @@
                         </div>
                         
                         <!-- Botões -->
-                        <div class="flex justify-end gap-3">
-                            <a href="{{ route('pedidos.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition">
+                        <div class="flex justify-end gap-3 mt-6 pt-4 border-t">
+                            <a href="{{ route('pedidos.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-8 rounded transition inline-block">
                                 Cancelar
                             </a>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded transition">
                                 Atualizar Pedido
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
