@@ -101,8 +101,8 @@ class ClienteController extends Controller
 
     public function update(Request $request, Cliente $cliente)
     {
-        // Verificar se o usuário tem permissão
-        if ($cliente->user_id !== Auth::id() && !Auth::user()->isAdmin()) {
+        // verifica se o cliente pertence ao usuário logado
+        if ($cliente->user_id !== Auth::id()) {
             abort(403, 'Acesso não autorizado.');
         }
 
