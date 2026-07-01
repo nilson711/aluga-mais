@@ -65,28 +65,25 @@ class DashboardController extends Controller
             ->get();
         
         // ============================================
-        // 4. PRÓXIMAS ENTREGAS (próximos 7 dias)
-        // ✅ Mostrar pedidos pendentes OU aprovados que ainda não foram entregues
+        // 4. PRÓXIMAS ENTREGAS (todas as futuras)
         // ============================================
-        
+
         $proximasEntregas = Pedido::with(['cliente', 'itens'])
             ->whereIn('status', ['pendente', 'aprovado'])
             ->whereDate('data_entrega', '>=', $hoje)
-            ->whereDate('data_entrega', '<=', $hoje->copy()->addDays(7))
             ->orderBy('data_entrega', 'asc')
-            ->limit(5)
+            ->limit(10)
             ->get();
-        
+                
         // ============================================
-        // 5. PRÓXIMAS DEVOLUÇÕES (próximos 7 dias)
+        // 5. PRÓXIMAS DEVOLUÇÕES (todas as futuras)
         // ============================================
-        
+
         $proximasDevolucoes = Pedido::with(['cliente', 'itens'])
             ->where('status', 'entregue')
             ->whereDate('data_devolucao', '>=', $hoje)
-            ->whereDate('data_devolucao', '<=', $hoje->copy()->addDays(7))
             ->orderBy('data_devolucao', 'asc')
-            ->limit(5)
+            ->limit(10)
             ->get();
         
         // ============================================
