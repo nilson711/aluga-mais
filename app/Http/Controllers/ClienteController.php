@@ -101,10 +101,6 @@ class ClienteController extends Controller
 
     public function update(Request $request, Cliente $cliente)
     {
-        // verifica se o cliente pertence ao usuário logado
-        if ($cliente->user_id !== Auth::id()) {
-            abort(403, 'Acesso não autorizado.');
-        }
 
         // Limpar CPF/CNPJ antes da validação
         $cpfLimpo = preg_replace('/[^0-9]/', '', $request->cpf);
