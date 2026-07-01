@@ -81,7 +81,7 @@ class DashboardController extends Controller
 
         $proximasDevolucoes = Pedido::with(['cliente', 'itens'])
             ->where('status', 'entregue')
-            ->whereDate('data_devolucao', '>=', $hoje)
+            // ->whereDate('data_devolucao', '>=', $hoje) 
             ->orderBy('data_devolucao', 'asc')
             ->limit(10)
             ->get();
